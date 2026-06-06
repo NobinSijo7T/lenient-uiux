@@ -3,7 +3,7 @@ import "./global.css";
 import { ReactNode } from "react";
 
 export const metadata = {
-  title: `Cyberpunk style website \(Community\)`,
+  title: "Lenient Tree-UI/UX Internship",
 };
 
 import NavBar from "../components/nav-bar";
