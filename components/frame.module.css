@@ -1,0 +1,105 @@
+.frame {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 11.1px var(--padding-15) var(--padding-11);
+  box-sizing: border-box;
+  gap: 0;
+  background-image: url(/Frame@3x.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  max-width: 1254px;
+  row-gap: var(--gap-20);
+  flex-shrink: 0;
+  text-align: left;
+  font-size: var(--fs-24);
+  color: var(--color-white);
+  font-family: var(--font-roboto-mono);
+}
+.uiuxCareerAccelerator {
+  margin: 0;
+  width: 361px;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: inline-block;
+  min-width: 310px;
+  max-width: 361px;
+}
+.frame5Row0Parent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 7.9px var(--padding-5) var(--padding-0);
+  box-sizing: border-box;
+  gap: var(--gap-1);
+  min-width: 310px;
+  max-width: 332px;
+  font-size: 29px;
+  font-family: var(--font-sekuya);
+}
+.frame5Row0 {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: var(--padding-0) var(--padding-3) var(--padding-0) var(--padding-0);
+  gap: 6.7px;
+}
+.lenientTree {
+  margin: 0;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+}
+.vector {
+  height: 27.9px;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-0) var(--padding-0) 3.4px;
+  box-sizing: border-box;
+}
+.vectorIcon {
+  height: 24.5px;
+  width: 100%;
+  position: relative;
+}
+.aNewGeneration {
+  width: 100%;
+  position: relative;
+  font-size: var(--fs-10);
+  font-family: var(--font-roboto-mono);
+  text-align: justify;
+  display: inline-block;
+  max-width: 320px;
+}
+@media screen and (max-width: 1275px) {
+  .frame {
+    gap: 0;
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .frame5Row0Parent,
+  .uiuxCareerAccelerator {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .uiuxCareerAccelerator {
+    font-size: var(--fs-19);
+  }
+  .frame5Row0Parent {
+    flex: 1;
+  }
+  .lenientTree {
+    font-size: 23px;
+  }
+}

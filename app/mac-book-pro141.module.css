@@ -1,0 +1,134 @@
+.macbookPro141 {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-black);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 59px var(--padding-0) 35px;
+  box-sizing: border-box;
+  line-height: normal;
+  letter-spacing: normal;
+}
+.frame,
+.frameParent {
+  max-width: 100%;
+  flex-shrink: 0;
+}
+.frameParent {
+  align-self: stretch;
+  height: 888px;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  font-size: 27px;
+  color: var(--color-white);
+  font-family: var(--font-russo-one);
+}
+.frame {
+  position: absolute;
+  bottom: 11px;
+  left: 4px;
+  width: 1502px;
+  height: 909px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 31.9px var(--padding-0);
+  box-sizing: border-box;
+  background-image: url(/Frame1@3x.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+.designThinkCreateContainer {
+  position: absolute;
+  bottom: 150px;
+  left: 123px;
+  display: inline-block;
+  max-width: 620px;
+  flex-shrink: 0;
+}
+.breakConventionsBuild {
+  font-size: 12px;
+  font-family: var(--font-roboto-mono);
+}
+.frameChild,
+.parent {
+  position: absolute;
+  flex-shrink: 0;
+}
+.frameChild {
+  top: 221px;
+  right: 125px;
+  width: 10px;
+  height: 362px;
+  object-fit: cover;
+}
+.parent {
+  bottom: 293px;
+  left: 114px;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 36px;
+  font-size: 15px;
+  font-family: var(--font-roboto-mono);
+}
+.div {
+  position: relative;
+  transform: rotate(-90deg);
+  flex-shrink: 0;
+  margin-left: 50px;
+}
+.rectangleWrapper {
+  align-self: stretch;
+  height: 167px;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--padding-0) var(--padding-3) var(--padding-0) 9px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.frameItem {
+  height: 167px;
+  width: 8px;
+  position: relative;
+  background-color: var(--color-gainsboro);
+}
+.frameInner,
+.uiuxInternship {
+  position: absolute;
+  flex-shrink: 0;
+}
+.frameInner {
+  right: 116px;
+  bottom: 63px;
+  width: 407px;
+  height: 129px;
+  object-fit: cover;
+}
+.uiuxInternship {
+  margin: 0;
+  right: 263px;
+  bottom: 390px;
+  font-size: 100px;
+  font-weight: 400;
+  font-family: inherit;
+  text-align: center;
+}
+@media screen and (max-width: 750px) {
+  .designThinkCreateContainer {
+    max-width: 100%;
+  }
+  .uiuxInternship {
+    font-size: 50px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .uiuxInternship {
+    font-size: 30px;
+  }
+}
