@@ -7,6 +7,7 @@ export const metadata = {
 };
 
 import NavBar from "../components/nav-bar";
+import SmoothScroll from "../components/smooth-scroll";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
@@ -20,7 +21,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning style={{ overflowX: "hidden", position: "relative" }}>
+        <SmoothScroll />
         <NavBar />
         {children}
       </body>
