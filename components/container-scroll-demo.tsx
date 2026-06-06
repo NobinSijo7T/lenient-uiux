@@ -81,7 +81,7 @@ export function ContainerScrollDemo() {
         }
       >
         <Image
-          src="/landing.png"
+          src="/Landing.png"
           alt="landing page preview"
           height={720}
           width={1400}
