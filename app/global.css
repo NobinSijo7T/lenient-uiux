@@ -1,17 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sekuya:ital,wght@0,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Russo+One:ital,wght@0,400&display=swap");
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@custom-variant dark (&:is(.dark *));
-
-body {
+*, *::before, *::after {
+  border-color: transparent;
+  outline-color: transparent;
+}
+html, body {
   margin: 0;
+  padding: 0;
+  background-color: #000;
   line-height: normal;
 }
 :root {
@@ -42,7 +40,7 @@ body {
   --fs-10: 10px;
   --fs-19: 19px;
   --fs-24: 24px;
-  --background: oklch(1 0 0);
+  --background: oklch(0 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -57,7 +55,7 @@ body {
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border: oklch(0 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
@@ -151,13 +149,4 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
