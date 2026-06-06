@@ -165,6 +165,18 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
         ref={canvasRef}
         style={{ position: "absolute", inset: 0, display: "block" }}
       />
+      {/* Smooth black gradient at the bottom to blend with next section */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "120px",
+          background: "linear-gradient(to bottom, transparent, #000)",
+          pointerEvents: "none",
+        }}
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import styles from "./container-scroll-demo.module.css";
 
 export function ContainerScrollDemo() {
   return (
@@ -12,8 +13,34 @@ export function ContainerScrollDemo() {
         overflow: "hidden",
         background: "#000",
         marginTop: "-2px",
+        position: "relative",
       }}
     >
+      {/* Animated Background Effects */}
+      <div className={styles.backgroundEffects}>
+        {/* Gradient Orbs */}
+        <div className={styles.gradientOrb1}></div>
+        <div className={styles.gradientOrb2}></div>
+        <div className={styles.gradientOrb3}></div>
+        
+        {/* Animated Grid */}
+        <div className={styles.animatedGrid}></div>
+        
+        {/* Particles */}
+        <div className={styles.particles}>
+          {[...Array(50)].map((_, i) => (
+            <div key={i} className={styles.particle} style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${8 + Math.random() * 12}s`
+            }}></div>
+          ))}
+        </div>
+        
+        {/* Scanlines */}
+        <div className={styles.scanlines}></div>
+      </div>
+
       <ContainerScroll
         titleComponent={
           <>
@@ -27,9 +54,11 @@ export function ContainerScrollDemo() {
                 marginTop: "0px",
                 lineHeight: 1.3,
                 letterSpacing: "-0.02em",
+                position: "relative",
+                zIndex: 2,
               }}
             >
-              Unleash the power of
+              Learn by Building
             </h2>
             <h2
               style={{
@@ -41,9 +70,12 @@ export function ContainerScrollDemo() {
                 marginTop: "0px",
                 marginBottom: "0px",
                 letterSpacing: "-0.03em",
+                position: "relative",
+                zIndex: 2,
+                textShadow: "0 0 40px rgba(0, 255, 255, 0.3)",
               }}
             >
-              Scroll Animations
+              Real UI/UX Experiences
             </h2>
           </>
         }
