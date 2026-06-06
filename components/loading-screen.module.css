@@ -4,12 +4,18 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #0f0f1e 100%);
+  background: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  animation: fadeIn 0.3s ease-in;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loadingContainer.fadeOut {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .loadingContent {
@@ -17,95 +23,156 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 60px;
+  animation: contentFadeIn 0.8s ease-out;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logoGlow {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, rgba(0, 128, 255, 0.2) 30%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 2s ease-in-out infinite;
+  filter: blur(20px);
 }
 
 .logo {
   position: relative;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logoText {
-  font-size: 48px;
-  font-weight: bold;
-  font-family: var(--font-russo-one), sans-serif;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5),
-               0 0 40px rgba(0, 255, 255, 0.3);
-  animation: pulse 2s ease-in-out infinite;
+  z-index: 2;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+  animation: logoScale 2s ease-in-out infinite;
 }
 
 .loadingBar {
-  width: 300px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 400px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
 }
 
 .loadingProgress {
   height: 100%;
-  background: linear-gradient(90deg, #00ffff, #0080ff, #00ffff);
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    #00ffff 20%,
+    #ffffff 50%,
+    #00ffff 80%,
+    transparent 100%
+  );
   background-size: 200% 100%;
-  animation: loading 2s ease-in-out infinite;
+  animation: loadingSlide 2s ease-in-out infinite;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.8),
+              0 0 40px rgba(0, 255, 255, 0.4);
 }
 
-.loadingText {
-  font-family: var(--font-roboto-mono), monospace;
-  font-size: 14px;
-  color: #00ffff;
-  letter-spacing: 2px;
-  animation: blink 1.5s ease-in-out infinite;
-}
-
-@keyframes fadeIn {
+@keyframes contentFadeIn {
   from {
     opacity: 0;
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes pulse {
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes logoScale {
   0%, 100% {
     transform: scale(1);
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5),
-                 0 0 40px rgba(0, 255, 255, 0.3);
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
   }
   50% {
     transform: scale(1.05);
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8),
-                 0 0 60px rgba(0, 255, 255, 0.5);
+    filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 0 80px rgba(0, 255, 255, 0.4));
   }
 }
 
-@keyframes loading {
+@keyframes loadingSlide {
   0% {
-    width: 0%;
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    transform: translateX(-100%);
   }
   100% {
-    width: 100%;
-    background-position: 0% 50%;
+    transform: translateX(100%);
   }
 }
 
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
+@media screen and (max-width: 768px) {
+  .loadingBar {
+    width: 300px;
   }
-  50% {
-    opacity: 0.5;
+  
+  .logoWrapper {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .logo {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .logoGlow {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .loadingBar {
+    width: 250px;
+  }
+  
+  .logoWrapper {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .logo {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .logoGlow {
+    width: 150px;
+    height: 150px;
   }
 }
