@@ -3,7 +3,8 @@ import { useEffect, useRef } from "react";
 
 const CHARS = "01ABCDEFabcdef01█▓░┼╬╋◆◇01アイウエオカキ01";
 const FONT_SIZE = 13;
-const COL_W = 18;
+const COL_W_DESKTOP = 18;
+const COL_W_MOBILE = 45; // ~60% fewer columns on mobile
 
 interface Col {
   x: number;
@@ -13,10 +14,10 @@ interface Col {
   opacity: number;
 }
 
-function makeCols(w: number, h: number): Col[] {
-  const n = Math.ceil(w / COL_W);
+function makeCols(w: number, h: number, colW: number): Col[] {
+  const n = Math.ceil(w / colW);
   return Array.from({ length: n }, (_, i) => ({
-    x: i * COL_W + COL_W / 2,
+    x: i * colW + colW / 2,
     y: -Math.random() * h * 1.5,
     speed: 0.7 + Math.random() * 1.6,
     trail: Math.floor(7 + Math.random() * 16),
@@ -35,22 +36,42 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const mobile = window.innerWidth <= 768;
+    const colW = mobile ? COL_W_MOBILE : COL_W_DESKTOP;
+    let isVisible = true;
+
     function resize() {
       const p = canvas!.parentElement;
       if (!p) return;
       canvas!.width  = p.clientWidth;
       canvas!.height = p.clientHeight;
-      colsRef.current = makeCols(canvas!.width, canvas!.height);
+      colsRef.current = makeCols(canvas!.width, canvas!.height, colW);
     }
 
     const ro = new ResizeObserver(resize);
     if (canvas.parentElement) ro.observe(canvas.parentElement);
     resize();
 
+    // Pause when off-screen to save CPU
+    const io = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    if (canvas.parentElement) io.observe(canvas.parentElement);
+
     let tick = 0;
+    let frameCount = 0;
 
     function draw() {
       rafRef.current = requestAnimationFrame(draw);
+
+      // Skip rendering when off-screen
+      if (!isVisible) return;
+
+      // On mobile, skip every other frame for better perf
+      frameCount++;
+      if (mobile && frameCount % 2 !== 0) return;
+
       const w = canvas!.width;
       const h = canvas!.height;
 
@@ -70,12 +91,14 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
           const alpha = ratio * ratio * col.opacity;
 
           if (i === 0) {
-            // Head — bright white with glow
-            ctx!.shadowColor = "rgba(255,255,255,0.9)";
-            ctx!.shadowBlur  = 10;
-            ctx!.fillStyle   = `rgba(255,255,255,${Math.min(1, col.opacity * 1.3)})`;
+            // Head — bright white; skip shadowBlur on mobile (very expensive)
+            if (!mobile) {
+              ctx!.shadowColor = "rgba(255,255,255,0.9)";
+              ctx!.shadowBlur  = 10;
+            }
+            ctx!.fillStyle = `rgba(255,255,255,${Math.min(1, col.opacity * 1.3)})`;
           } else {
-            ctx!.shadowBlur = 0;
+            if (!mobile) ctx!.shadowBlur = 0;
             // Slight blue-white tint for depth
             ctx!.fillStyle = `rgba(210,215,255,${alpha * 0.9})`;
           }
@@ -84,7 +107,7 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
           const char = CHARS[Math.floor(Math.random() * CHARS.length)];
           ctx!.fillText(char, col.x, yPos);
         }
-        ctx!.shadowBlur = 0;
+        if (!mobile) ctx!.shadowBlur = 0;
 
         col.y += col.speed;
         if (col.y - col.trail * FONT_SIZE > h) {
@@ -148,6 +171,7 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
     return () => {
       cancelAnimationFrame(rafRef.current);
       ro.disconnect();
+      io.disconnect();
     };
   }, [variant]);
 
@@ -180,3 +204,4 @@ export default function SectionTransition({ variant = "a" }: { variant?: "a" | "
     </div>
   );
 }
+

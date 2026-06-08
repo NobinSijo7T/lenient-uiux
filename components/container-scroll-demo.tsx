@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import styles from "./container-scroll-demo.module.css";
@@ -9,13 +9,30 @@ function seededValue(index: number, salt: number) {
   return value - Math.floor(value);
 }
 
-const particles = Array.from({ length: 50 }, (_, i) => ({
-  left: `${(seededValue(i, 1) * 100).toFixed(4)}%`,
-  animationDelay: `${(seededValue(i, 2) * 8).toFixed(4)}s`,
-  animationDuration: `${(8 + seededValue(i, 3) * 12).toFixed(4)}s`,
-}));
+function makeParticles(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    left: `${(seededValue(i, 1) * 100).toFixed(4)}%`,
+    animationDelay: `${(seededValue(i, 2) * 8).toFixed(4)}s`,
+    animationDuration: `${(8 + seededValue(i, 3) * 12).toFixed(4)}s`,
+  }));
+}
+
+const desktopParticles = makeParticles(50);
+const mobileParticles = makeParticles(15);
+
 
 export function ContainerScrollDemo() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const particles = isMobile ? mobileParticles : desktopParticles;
+
   return (
     <div
       style={{
@@ -32,9 +49,9 @@ export function ContainerScrollDemo() {
         {/* Gradient Orbs */}
         <div className={styles.gradientOrb1}></div>
         <div className={styles.gradientOrb2}></div>
-        <div className={styles.gradientOrb3}></div>
+        {!isMobile && <div className={styles.gradientOrb3}></div>}
         
-        {/* Animated Grid */}
+        {/* Animated Grid — hidden on mobile via CSS */}
         <div className={styles.animatedGrid}></div>
         
         {/* Particles */}
@@ -44,7 +61,7 @@ export function ContainerScrollDemo() {
           ))}
         </div>
         
-        {/* Scanlines */}
+        {/* Scanlines — hidden on mobile via CSS */}
         <div className={styles.scanlines}></div>
       </div>
 

@@ -239,6 +239,7 @@ export default function FaultyTerminal({
   dpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1,
   pageLoadAnimation = true,
   brightness = 1,
+  enabled = true,
   className = "",
   style = {},
   ...rest
@@ -267,6 +268,7 @@ export default function FaultyTerminal({
   }, []);
 
   useEffect(() => {
+    if (!enabled) return;
     const ctn = containerRef.current;
     if (!ctn) return;
 
@@ -398,8 +400,32 @@ export default function FaultyTerminal({
     mouseStrength,
     pageLoadAnimation,
     brightness,
+    enabled,
     handleMouseMove
   ]);
+
+  // When disabled, show a lightweight static CSS pattern as fallback
+  if (!enabled) {
+    return (
+      <div
+        className={`faulty-terminal-container ${className}`}
+        style={{
+          ...style,
+          background: `
+            radial-gradient(ellipse 120% 80% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%),
+            repeating-linear-gradient(
+              0deg,
+              rgba(255,255,255,0.015) 0px,
+              transparent 1px,
+              transparent 3px
+            ),
+            #000
+          `,
+        }}
+        {...rest}
+      />
+    );
+  }
 
   return <div ref={containerRef} className={`faulty-terminal-container ${className}`} style={style} {...rest} />;
 }

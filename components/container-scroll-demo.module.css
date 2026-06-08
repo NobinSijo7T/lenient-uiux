@@ -180,14 +180,23 @@
   .gradientOrb3 {
     width: 300px;
     height: 300px;
+    filter: blur(30px); /* halved from 50-60px */
   }
   
+  /* Disable animated grid on mobile — it forces GPU compositing */
   .animatedGrid {
-    background-size: 30px 30px;
+    display: none;
+  }
+
+  /* Disable scanlines on mobile */
+  .scanlines {
+    display: none;
   }
   
   .particle {
     width: 3px;
     height: 3px;
+    /* Remove multi-layer box-shadow glows — very expensive on mobile GPUs */
+    box-shadow: 0 0 6px rgba(0, 255, 255, 0.8);
   }
 }

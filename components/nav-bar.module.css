@@ -74,3 +74,30 @@
   width: 50%;
   opacity: 1;
 }
+
+@media screen and (max-width: 768px) {
+  .navBar {
+    top: 20px;
+    padding: 6px 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 90%;
+    max-width: 380px;
+  }
+
+  .navBar.scrolled {
+    top: 10px;
+  }
+
+  .navLinks {
+    gap: 8px;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .navLink {
+    font-size: 11px;
+    padding: 4px 8px;
+    letter-spacing: 1px;
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Camera,
   GLTFLoader,
@@ -170,19 +170,33 @@ function fitModelToView(root: Transform) {
 
 export default function TexturedMeshViewer({ className = "", src }: TexturedMeshViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  // Detect mobile on mount
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
+    // Skip entire WebGL pipeline on mobile — the 4.8MB GLB + OGL renderer
+    // is the single biggest performance bottleneck on mobile devices.
+    if (isMobile) return;
+
     const container = containerRef.current;
     if (!container) return;
 
     let disposed = false;
     let frameId = 0;
+    let isVisible = true;
     let controls: Orbit | null = null;
 
     const renderer = new Renderer({
       alpha: true,
       antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2),
+      dpr: Math.min(window.devicePixelRatio || 1, 1.5),
     });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
@@ -219,6 +233,13 @@ export default function TexturedMeshViewer({ className = "", src }: TexturedMesh
     container.appendChild(gl.canvas);
     resize();
 
+    // Pause rendering when off-screen to save GPU cycles
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(container);
+
     GLTFLoader.load(gl, src)
       .then((gltf) => {
         if (disposed) return;
@@ -233,6 +254,7 @@ export default function TexturedMeshViewer({ className = "", src }: TexturedMesh
 
     const update = () => {
       frameId = requestAnimationFrame(update);
+      if (!isVisible) return; // skip rendering when off-screen
       controls?.update();
       renderer.render({ scene, camera, clear: true });
     };
@@ -243,12 +265,13 @@ export default function TexturedMeshViewer({ className = "", src }: TexturedMesh
       cancelAnimationFrame(frameId);
       controls?.remove();
       resizeObserver.disconnect();
+      visibilityObserver.disconnect();
       if (gl.canvas.parentNode) {
         gl.canvas.parentNode.removeChild(gl.canvas);
       }
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [src]);
+  }, [src, isMobile]);
 
   return <div ref={containerRef} className={className} aria-label="Interactive textured 3D model" />;
 }

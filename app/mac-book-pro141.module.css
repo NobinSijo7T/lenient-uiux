@@ -139,16 +139,73 @@
   z-index: 3;
   pointer-events: none;
 }
-@media screen and (max-width: 750px) {
-  .designThinkCreateContainer {
-    max-width: 100%;
+@media screen and (max-width: 768px) {
+  .frameParent {
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 120px 16px 60px;
+    box-sizing: border-box;
+    gap: 30px;
   }
+
+  .frame {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .designThinkCreateContainer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    text-align: center;
+    padding: 0 10px;
+    font-size: 22px;
+  }
+
   .uiuxInternship {
-    font-size: 50px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    font-size: 40px !important;
+    margin: 20px 0;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
+  }
+
+  .frameChild {
+    display: none;
+  }
+
+  .parent {
+    display: none;
+  }
+
+  .frameInner {
+    display: none;
   }
 }
+
 @media screen and (max-width: 450px) {
   .uiuxInternship {
-    font-size: 30px;
+    font-size: 28px !important;
+  }
+  .designThinkCreateContainer {
+    font-size: 18px;
   }
 }
