@@ -201,7 +201,10 @@ export default function JourneySection({ transparent = false }: { transparent?: 
           <div style={{...fadeIn(".5s"),width:"100%",position:"relative", padding: "20px 0"}}>
             {/* Base line */}
             <div style={{
-              position:"absolute", top:"32px", left:"5%", right:"5%",
+              position:"absolute",
+              top:"52px",
+              left:`calc(100% / ${STEPS.length} / 2)`,
+              right:`calc(100% / ${STEPS.length} / 2)`,
               height:"2px", background:"rgba(255,255,255,0.1)", zIndex:0,
               borderRadius: "2px"
             }}>

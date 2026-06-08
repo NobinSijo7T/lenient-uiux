@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import Frame from "../components/frame";
+import TexturedMeshViewer from "../components/textured-mesh-viewer";
 import styles from "./mac-book-pro141.module.css";
 
 const MacBookPro141: NextPage = () => {
@@ -8,7 +9,8 @@ const MacBookPro141: NextPage = () => {
     <div className={styles.macbookPro141}>
       <main className={styles.frameParent}>
         <section className={styles.frame}>
-          <Frame />
+          <TexturedMeshViewer className={styles.meshViewer} src="/textured_mesh.glb" />
+          <Frame className={styles.frameContent} />
         </section>
         <div className={styles.designThinkCreateContainer}>
           <span>Design. Think. Create.</span>

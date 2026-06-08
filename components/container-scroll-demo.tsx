@@ -4,6 +4,17 @@ import Image from "next/image";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import styles from "./container-scroll-demo.module.css";
 
+function seededValue(index: number, salt: number) {
+  const value = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+const particles = Array.from({ length: 50 }, (_, i) => ({
+  left: `${(seededValue(i, 1) * 100).toFixed(4)}%`,
+  animationDelay: `${(seededValue(i, 2) * 8).toFixed(4)}s`,
+  animationDuration: `${(8 + seededValue(i, 3) * 12).toFixed(4)}s`,
+}));
+
 export function ContainerScrollDemo() {
   return (
     <div
@@ -28,12 +39,8 @@ export function ContainerScrollDemo() {
         
         {/* Particles */}
         <div className={styles.particles}>
-          {[...Array(50)].map((_, i) => (
-            <div key={i} className={styles.particle} style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${8 + Math.random() * 12}s`
-            }}></div>
+          {particles.map((particle, i) => (
+            <div key={i} className={styles.particle} style={particle}></div>
           ))}
         </div>
         
